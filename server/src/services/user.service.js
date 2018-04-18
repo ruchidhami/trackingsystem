@@ -1,5 +1,7 @@
 "use strict";
 
+const mongoose = require('mongoose');
+
 const User = require('../models/user.model');
 
 function create(userParams) {
@@ -16,12 +18,27 @@ function create(userParams) {
   })
 }
 
-
-function list(params) {
+function update(userId, params) {
   return new Promise((resolve, reject) => {
-    User.find(params)
-      .then(listedUser => {
-        resolve(listedUser)
+    User.update({
+      '_id': mongoose.Types.ObjectId(userId)
+    }, {
+      '$set': params
+    })
+      .then(updatedResponse => {
+        resolve(updatedResponse)
+      })
+      .catch(err => {
+        reject(err);
+      })
+  })
+}
+
+function deleteUser(userId) {
+  return new Promise((resolve, reject) => {
+    User.findOneAndRemove({"_id": userId})
+      .then(userDeleted => {
+        resolve(userDeleted)
       })
       .catch(err => {
         reject(err)
@@ -29,12 +46,13 @@ function list(params) {
   })
 }
 
-function findOne(params) {
-  return User.findOne(params);
+function findAll() {
+  return User.find();
 }
 
 module.exports = {
   create,
-  list,
-  findOne
+  update,
+  findAll,
+  deleteUser
 };

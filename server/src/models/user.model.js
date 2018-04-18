@@ -6,6 +6,10 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+  deviceIds: {
+    type: Array,
+    required: true
+  },
   firstName: {
     type: String,
     index: true,
@@ -19,18 +23,6 @@ const UserSchema = new Schema({
   username: {
     type: String,
     index: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  role: {
-    type: String,
     required: true
   }
 });

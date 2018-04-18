@@ -21,7 +21,7 @@ var port = process.env.PORT || envConfig.get("PORT");
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
 
 app.set("views", path.join(__dirname, "views"));
@@ -29,7 +29,7 @@ app.set('view engine', 'ejs');
 
 // Include all routes
 require('./helpers/routes').route(app);
-require('./src/operations/defaultUserSetup').setup();
+// require('./src/operations/defaultUserSetup').setup();
 
 app.listen(port, () => {
   console.log(`Server is running at port ${port}`);
